@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0b5cff" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="MileTrack" />
+<meta name="description" content="Simple mileage tracker for real estate professionals." />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="icon.svg" />
+<link rel="stylesheet" href="styles.css" />
+<title>MileTrack — Real Estate Mileage</title>
+</head>
+<body>
+<div id="app">
+  <!-- HOME VIEW -->
+  <section class="view" data-view="home">
+    <header class="app-header">
+      <div>
+        <h1 class="brand">MileTrack</h1>
+        <p class="subtitle">Real estate mileage</p>
+      </div>
+      <button class="icon-btn" data-goto="settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
+    </header>
+
+    <div class="summary-card">
+      <div class="summary-year" id="summary-year">2026</div>
+      <div class="summary-miles">
+        <span id="total-miles">0.0</span>
+        <span class="summary-unit">miles</span>
+      </div>
+      <div class="summary-deduction">
+        Est. deduction: <strong id="total-deduction">$0.00</strong>
+      </div>
+      <div class="summary-count"><span id="total-drives">0</span> drives logged</div>
+    </div>
+
+    <button class="primary-btn big" data-goto="log">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      Log a Drive
+    </button>
+
+    <div class="section-row">
+      <h2 class="section-title">Recent Drives</h2>
+      <button class="text-btn" data-goto="drives">View all</button>
+    </div>
+
+    <ul class="drive-list" id="recent-list">
+      <li class="empty-state">No drives yet. Tap "Log a Drive" to start.</li>
+    </ul>
+
+    <div class="footer-actions">
+      <button class="secondary-btn" data-goto="export">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Export for Taxes
+      </button>
+    </div>
+  </section>
+
+  <!-- LOG DRIVE VIEW -->
+  <section class="view hidden" data-view="log">
+    <header class="sub-header">
+      <button class="icon-btn" data-goto="home" aria-label="Back">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <h2>Log a Drive</h2>
+      <div class="spacer"></div>
+    </header>
+
+    <form id="drive-form" class="form" novalidate>
+      <div class="field">
+        <label for="drive-date">Date</label>
+        <input type="date" id="drive-date" required />
+      </div>
+
+      <div class="field">
+        <label for="drive-from">From</label>
+        <input type="text" id="drive-from" placeholder="Start address" autocomplete="off" required />
+        <button type="button" class="inline-btn" id="use-location">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"></circle><path d="M12 2a8 8 0 0 0-8 8c0 5.5 8 12 8 12s8-6.5 8-12a8 8 0 0 0-8-8z"></path></svg>
+          Use my current location
+        </button>
+      </div>
+
+      <div class="field">
+        <label for="drive-to">To</label>
+        <input type="text" id="drive-to" placeholder="Destination address" autocomplete="off" required />
+      </div>
+
+      <button type="button" class="primary-btn" id="calc-btn">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"></path><path d="M3 6h18"></path><path d="M3 18h12"></path></svg>
+        Calculate Distance
+      </button>
+
+      <div class="distance-card hidden" id="distance-card">
+        <div class="distance-label">Distance</div>
+        <div class="distance-value"><span id="distance-miles">—</span> <span class="unit">mi</span></div>
+        <div class="distance-method" id="distance-method"></div>
+      </div>
+
+      <div class="field" id="odometer-section">
+        <label>Odometer <span class="optional">(optional)</span></label>
+        <div class="two-col">
+          <input type="number" id="odo-start" placeholder="Start" inputmode="decimal" min="0" step="1" />
+          <input type="number" id="odo-end" placeholder="End" inputmode="decimal" min="0" step="1" />
+        </div>
+      </div>
+
+      <div class="field hidden" id="purpose-section">
+        <label>What was this drive for?</label>
+        <div class="purpose-grid" id="purpose-grid">
+          <button type="button" class="purpose-tile" data-purpose="Client Showing">
+            <span class="tile-icon">🏠</span>
+            <span>Client Showing</span>
+          </button>
+          <button type="button" class="purpose-tile" data-purpose="Listing Appointment">
+            <span class="tile-icon">📋</span>
+            <span>Listing Appointment</span>
+          </button>
+          <button type="button" class="purpose-tile" data-purpose="Open House">
+            <span class="tile-icon">🚪</span>
+            <span>Open House</span>
+          </button>
+          <button type="button" class="purpose-tile" data-purpose="Office Meeting">
+            <span class="tile-icon">🏢</span>
+            <span>Office Meeting</span>
+          </button>
+          <button type="button" class="purpose-tile" data-purpose="Property Inspection">
+            <span class="tile-icon">🔍</span>
+            <span>Property Inspection</span>
+          </button>
+          <button type="button" class="purpose-tile" data-purpose="Closing">
+            <span class="tile-icon">✍️</span>
+            <span>Closing / Signing</span>
+          </button>
+          <button type="button" class="purpose-tile" data-purpose="Marketing">
+            <span class="tile-icon">📸</span>
+            <span>Marketing / Supplies</span>
+          </button>
+          <button type="button" class="purpose-tile" data-purpose="Other">
+            <span class="tile-icon">✏️</span>
+            <span>Other</span>
+          </button>
+        </div>
+        <input type="text" id="purpose-other" class="hidden" placeholder="Describe the purpose" />
+      </div>
+
+      <div class="field hidden" id="notes-section">
+        <label for="drive-notes">Notes <span class="optional">(optional)</span></label>
+        <textarea id="drive-notes" rows="2" placeholder="e.g. client name, property address"></textarea>
+      </div>
+
+      <button type="submit" class="primary-btn success hidden" id="save-btn">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        Save Drive
+      </button>
+    </form>
+  </section>
+
+  <!-- ALL DRIVES VIEW -->
+  <section class="view hidden" data-view="drives">
+    <header class="sub-header">
+      <button class="icon-btn" data-goto="home" aria-label="Back">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <h2>All Drives</h2>
+      <div class="spacer"></div>
+    </header>
+
+    <div class="filter-row">
+      <label for="year-filter">Year</label>
+      <select id="year-filter"></select>
+    </div>
+
+    <ul class="drive-list" id="all-list">
+      <li class="empty-state">No drives yet.</li>
+    </ul>
+  </section>
+
+  <!-- EXPORT VIEW -->
+  <section class="view hidden" data-view="export">
+    <header class="sub-header">
+      <button class="icon-btn" data-goto="home" aria-label="Back">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <h2>Export for Taxes</h2>
+      <div class="spacer"></div>
+    </header>
+
+    <div class="field">
+      <label for="export-year">Tax year</label>
+      <select id="export-year"></select>
+    </div>
+
+    <div class="export-summary" id="export-summary">
+      <div class="stat">
+        <div class="stat-label">Total drives</div>
+        <div class="stat-value" id="export-drives">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Total miles</div>
+        <div class="stat-value" id="export-miles">0.0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Standard rate</div>
+        <div class="stat-value" id="export-rate">$0.70</div>
+      </div>
+      <div class="stat highlight">
+        <div class="stat-label">Est. deduction</div>
+        <div class="stat-value" id="export-deduction">$0.00</div>
+      </div>
+    </div>
+
+    <div class="odo-compare" id="odo-compare">
+      <div class="stat-label">Annual odometer (from Settings)</div>
+      <div class="stat-small">Start: <span id="odo-year-start">—</span></div>
+      <div class="stat-small">End: <span id="odo-year-end">—</span></div>
+      <div class="stat-small">Difference: <span id="odo-year-diff">—</span> mi</div>
+    </div>
+
+    <button class="primary-btn success" id="export-csv-btn">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download CSV
+    </button>
+
+    <p class="help-text">Open the CSV in Excel, Google Sheets, or send it to your accountant.</p>
+  </section>
+
+  <!-- SETTINGS VIEW -->
+  <section class="view hidden" data-view="settings">
+    <header class="sub-header">
+      <button class="icon-btn" data-goto="home" aria-label="Back">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <h2>Settings</h2>
+      <div class="spacer"></div>
+    </header>
+
+    <form id="settings-form" class="form" novalidate>
+      <div class="field">
+        <label for="setting-rate">IRS standard mileage rate ($/mile)</label>
+        <input type="number" id="setting-rate" step="0.001" min="0" />
+        <p class="help-text">2025 IRS business rate: $0.70/mile. Update each year.</p>
+      </div>
+
+      <div class="field">
+        <label for="setting-home">Default "From" address</label>
+        <input type="text" id="setting-home" placeholder="e.g. your home office" />
+        <p class="help-text">Prefills the From field on new drives.</p>
+      </div>
+
+      <fieldset class="fieldset">
+        <legend>Annual odometer reading</legend>
+        <p class="help-text">The IRS wants your odometer on Jan 1 and Dec 31 each year.</p>
+        <div class="field">
+          <label for="setting-odo-year">Year</label>
+          <select id="setting-odo-year"></select>
+        </div>
+        <div class="field">
+          <label for="setting-odo-start">Odometer on Jan 1</label>
+          <input type="number" id="setting-odo-start" min="0" step="1" inputmode="numeric" />
+        </div>
+        <div class="field">
+          <label for="setting-odo-end">Odometer on Dec 31</label>
+          <input type="number" id="setting-odo-end" min="0" step="1" inputmode="numeric" />
+        </div>
+      </fieldset>
+
+      <button type="submit" class="primary-btn success">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        Save Settings
+      </button>
+    </form>
+
+    <div class="danger-zone">
+      <h3>Danger zone</h3>
+      <button type="button" class="danger-btn" id="clear-data-btn">Delete all data</button>
+    </div>
+  </section>
+
+  <!-- DRIVE DETAIL MODAL -->
+  <div class="modal hidden" id="drive-modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3>Drive details</h3>
+        <button class="icon-btn" id="modal-close" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+      <div class="modal-body" id="modal-body"></div>
+      <footer class="modal-footer">
+        <button class="danger-btn" id="modal-delete">Delete drive</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast hidden" id="toast"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
