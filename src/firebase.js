@@ -1,13 +1,3 @@
-/**
- * Firebase initialization.
- *
- * Config values come from Firebase console -> Project settings -> General ->
- * Your apps -> Web app -> SDK setup and configuration. These identifiers are
- * public; real security is enforced by firestore.rules.
- *
- * The Spark (free) plan is used; no billing required.
- */
-
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 

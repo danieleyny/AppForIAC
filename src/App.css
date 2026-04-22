@@ -1,0 +1,157 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  background: #f7f8fa;
+  color: #222;
+  line-height: 1.4;
+}
+
+.app-header {
+  background: #0f62fe;
+  color: white;
+  padding: 16px 20px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 18px;
+  color: #333;
+  margin: 20px 0 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form input,
+.form select,
+.form textarea {
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  font-family: inherit;
+}
+
+.form textarea {
+  resize: vertical;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #555;
+  font-size: 14px;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  background: #0f62fe;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #c4c6cc;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: white;
+  color: #0f62fe;
+  border: 1px solid #0f62fe;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background: white;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #e4e6eb;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.card p {
+  margin: 4px 0;
+  color: #444;
+  font-size: 14px;
+}
+
+.card button {
+  margin-top: 10px;
+}
+
+.empty {
+  font-style: italic;
+  color: #888;
+}
+
+.error {
+  background: #ffecec;
+  color: #a00;
+  border: 1px solid #f5c6cb;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 20px;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.modal .actions {
+  display: flex;
+  gap: 10px;
+}
