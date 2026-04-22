@@ -1,23 +1,24 @@
 /**
  * Firebase initialization.
  *
- * Fill in the values below from your Firebase project's web-app config:
- *   Firebase console -> Project settings -> General -> Your apps -> Web app -> SDK setup and configuration.
+ * Config values come from Firebase console -> Project settings -> General ->
+ * Your apps -> Web app -> SDK setup and configuration. These identifiers are
+ * public; real security is enforced by firestore.rules.
  *
- * The project's Spark (free) plan is sufficient for a small team; no billing required.
- * See README.md for step-by-step setup.
+ * The Spark (free) plan is used; no billing required.
  */
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'REPLACE_WITH_YOUR_API_KEY',
-  authDomain: 'REPLACE_WITH_YOUR_AUTH_DOMAIN',
-  projectId: 'REPLACE_WITH_YOUR_PROJECT_ID',
-  storageBucket: 'REPLACE_WITH_YOUR_STORAGE_BUCKET',
-  messagingSenderId: 'REPLACE_WITH_YOUR_SENDER_ID',
-  appId: 'REPLACE_WITH_YOUR_APP_ID',
+  apiKey: 'AIzaSyB2RNRYfh7xCDzvu4v-aRGRCI2Gz9iq7r4',
+  authDomain: 'traveltracker-80e9c.firebaseapp.com',
+  projectId: 'traveltracker-80e9c',
+  storageBucket: 'traveltracker-80e9c.firebasestorage.app',
+  messagingSenderId: '607887946440',
+  appId: '1:607887946440:web:afcabcf1af5f8628e86bfd',
+  measurementId: 'G-KHMGGHDG17',
 };
 
 const app = initializeApp(firebaseConfig);
